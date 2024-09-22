@@ -28,7 +28,7 @@ model character {
 model leaderboard {
   id       String   @id @default(uuid()) 
   name     String
-  time     Int
+  time     String
   date     DateTime @default(now())
   game     game     @relation(fields: [gameId], references: [id])
   gameId   String

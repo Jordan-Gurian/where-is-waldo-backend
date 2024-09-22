@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/start', timerController.startTimer);
 
 // // GET specific game from server
-router.get('/stop', timerController.stopTimer);
+router.post('/stop', timerController.stopTimer);
 
 module.exports = router;
