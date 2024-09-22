@@ -3,11 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const characterRouter = require('./routes/character');
 const gameRouter = require('./routes/game');
 const leaderboardRouter = require('./routes/leaderboard');
+const timerRouter = require('./routes/timer')
 
 var app = express();
 
@@ -20,11 +22,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors({
+  origin: process.env.CLIENT_SIDE_PATH,  credentials: true,
+}));
 
 app.use('/', indexRouter);
 app.use('/characters', characterRouter);
 app.use('/games', gameRouter);
 app.use('/leaderboards', leaderboardRouter);
+app.use('/timer', timerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
