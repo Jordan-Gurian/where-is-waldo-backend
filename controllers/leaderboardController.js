@@ -12,30 +12,11 @@ exports.getAllLeaderboardEntries = asyncHandler(async(req, res, next) => {
     }
 });
 
-exports.getOneEntireLeaderboardEntries = asyncHandler(async(req, res, next) => {
-    try {
-        const oneLeaderboard = await prisma.leaderboard.findMany({
-            where: {
-                gameId: req.params.gameId,
-            }, 
-            orderBy: [
-                {
-                    time: 'asc',
-                }
-            ],
-        });
-        return res.json(oneLeaderboard);
-    } catch(e) {
-        return res.status(403).send(`Failed to get leaderboard ${e}`)
-    }     
-});
-
 exports.getOneLeaderboardEntry = asyncHandler(async(req, res, next) => {
     try {
         const oneLeaderboardEntry = await prisma.leaderboard.findUnique({
             where: {
                 id: req.params.leaderboardId,
-                gameId: req.params.gameId,
             }
         });
         return res.json(oneLeaderboardEntry);
@@ -59,25 +40,11 @@ exports.postLeaderboardEntry = asyncHandler(async(req, res, next) => {
     }
 });
 
-exports.deleteOneEntireLeaderboardEntries = asyncHandler(async(req, res, next) => {
-    try {
-        const leaderboard = await prisma.leaderboard.deleteMany({
-            where: {
-                gameId: req.params.gameId,
-            }, 
-        });
-        return res.json(leaderboard);
-    } catch(e) {
-        return res.status(403).send(`Failed to delete leaderboard ${e}`)
-    }     
-});
-
 exports.deleteOneLeaderboardEntry = asyncHandler(async(req, res, next) => {
     try {
         const deleteLeaderboard = await prisma.leaderboard.delete({
             where: {
                 id: req.params.leaderboardId,
-                gameId: req.params.gameId,
             }
         });
         return res.json(deleteLeaderboard);

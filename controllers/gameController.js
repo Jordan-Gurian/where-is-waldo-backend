@@ -15,6 +15,10 @@ exports.getAllGames = asyncHandler(async(req, res, next) => {
 exports.getGame = asyncHandler(async(req, res, next) => {
     try {
         const oneGame = await prisma.game.findUnique({
+            include: {
+                leaderboard: true,
+                characters: true,
+            },
             where: {
                 id: req.params.gameId,
             }
